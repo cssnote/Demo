@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>滚滚屏3位置法2</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		html{
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		
+		}
+		body{
+			background-color: #ddd;
+			width: 100%;
+			height: 100%;
+			position: relative;
+			overflow: hidden;
+			background:#333;
+
+		}
+
+		.page{
+			width:100%;
+			height: 100%;
+			top:0px;
+			left:0;
+			position: absolute;
+			font-size:100px;
+			line-height: 300px;
+			text-align: center;
+			overflow: hidden;
+		}
+
+		div.page0{
+			background-color: skyblue;
+			z-index: 4;
+		}
+		div.page1{
+			background-color: yellowgreen;
+			z-index: 3;
+			
+		}
+		div.page2{
+			background-color: green;
+			z-index: 2;
+		}
+		div.page3{
+			background-color: pink;
+			z-index: 1;
+		}
+		div.page4{
+			background-color: orange;
+			z-index: 0;
+		}
+
+		.elem1{
+			width:100px;
+			height:100px;
+			border-radius: 50px;
+			background:blue;
+			position:absolute;
+			left:50%;
+			margin-left:-50px;
+			top:-100px;
+			
+		}
+
+		.elem2{
+			width:100px;
+			left:-100px;
+			position:absolute;
+			top:50%;
+			margin-top:-50px;
+			height:100px;
+			background-color:skyblue;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="page page0">0</div>
+	<div class="page page1">
+		1
+		<div class="elem1"></div>
+		
+	</div>
+	<div class="page page2">
+		2
+		<div class="elem2"></div>
+	</div>
+	<div class="page page3">3</div>
+	<div class="page page4">4</div>
+	
+	<script type="text/javascript" src="js/zeptoWithFx.js"></script>
+	<script type="text/javascript">
+
+		var idx = 0;
+		var next = 1;
+		var prev = 4;
+		var startY;	
+		var sumY;
+		pages = $(".page");
+		var arrIn = [];
+		var arrOut = [];
+
+
+		var pageHeight;
+
+		// 一开始做的准备工作
+
+		init();
+
+		window.onresize = init; //窗口改变大小时
+
+
+		function init(){
+			pageHeight = $(document).height();
+			pages.css({
+				"transform":"translateY("+ pageHeight +"px)"
+			});
+
+			pages.eq(idx).css({
+				"transform":"translateY("+ 0 +"px)"
+			});
+
+		}
+
+		$(document).on("touchstart",startHandle);
+		$(document).on("touchmove",moveHandle);
+		$(document).on("touchend",endHandle);
+
+		
+
+		function startHandle(event){
+
+			if (event.cancelable) {
+			        // 判断默认行为是否已经被禁用
+			    if (!event.defaultPrevented) {
+			        event.preventDefault();
+			    }
+			}
+		
+
+			startY = event.touches[0].clientY;  //记录最开始的位置
+
+			pages.css({
+				"transition":"none"
+			});
+
+			pages[prev].style.zIndex = "1";
+			pages[idx].style.zIndex = "0";
+			pages[next].style.zIndex = "1";
+		}
+
+		function moveHandle(event){
+
+			if (event.cancelable) {  
+			   // 判断默认行为是否已经被禁用
+			    if (!event.defaultPrevented) {
+			        event.preventDefault();
+			    }
+			}
+
+			sumY = event.touches[0].clientY - startY; 
+
+			if(idx == 0 && sumY > 0 || idx ==4 && sumY < 0) return;
+
+			var scaleNum = 1 - Math.abs(sumY) / pageHeight / 1.3;  //缩小的百分比点数
+
+			pages[idx].style.transform = "scale("+ scaleNum +")"; //缩小当前图片
+			
+			if(sumY < 0){   //手指向上划
+				pages[next].style.transform = "translateY("+ (pageHeight + sumY + pageHeight /3) +"px) scale(1)";
+			}else if(sumY > 0){  //手指向下划
+				pages[prev].style.transform = "translateY("+ (-pageHeight + sumY - pageHeight / 3)  +"px) scale(1)";
+			}
+
+		}
+
+
+		function endHandle(event){
+
+			if(idx == 0 && sumY > 0 || idx ==4 && sumY < 0) return;
+			pages.eq(idx).animate({
+				"transform":"scale(0)"
+			},500);
+
+			
+
+			if(sumY > pageHeight / 3){	
+				arrOut[idx]();
+				pages.eq(prev).animate({
+					"transform":"translateY("+ 0 +"px)"
+				},500);
+
+				arrIn[prev]();
+
+				next = idx;
+				idx = prev;
+				prev--;
+				if(prev < 0){
+					prev = 4;
+				}
+				if(next > 4){
+					next = 0;
+				}
+				
+			}else if(sumY < -pageHeight /3){
+
+
+				arrOut[idx]();
+				pages.eq(next).animate({
+					"transform":"translateY("+ 0 +"px)"
+				},500);
+
+				
+				arrIn[next]();
+				
+				prev = idx;
+				idx = next;
+				next++;
+				if(next > 4){
+					next = 0;
+				}
+				if(prev < 0){
+					prev = 4;
+				}
+				
+			}else{
+				pages[idx].style.transform = "scale("+ 1 +")";
+			}
+		}
+
+
+
+		arrIn[1] = function inFun(){
+			
+			$(".page1 .elem1").show().animate({
+				"transform":"translateY("+ pageHeight / 2 +"px)"
+			},1000);
+
+			console.log("1in");
+
+		}
+
+		arrOut[1] = function(){
+			console.log("1out");
+			$(".page1 .elem1").animate({
+				"transform":"translateY("+ 0 +"px)"
+			},200);
+		}
+
+
+
+		arrOut[0] = function(){
+			console.log("0out");
+		}
+
+		
+
+		arrIn[2] = function(){
+			$(".elem2").animate({
+				"transform":"translateX("+ pageHeight / 2 +"px)"
+			},1000);
+		}
+
+		arrOut[2] = function(){
+			$(".elem2").animate({
+				"transform":"translateX("+ 0 +"px)"
+			},200);
+		}
+
+		arrIn[0] = function(){
+			console.log("0in");
+		}
+
+		arrIn[3] = function(){
+			console.log("3in");
+		}
+
+		arrOut[3] = function(){
+			console.log("3out");
+		}
+
+		arrIn[4] = function(){
+			console.log("4in");
+		}
+
+		arrOut[4] = function(){
+			console.log("4out");
+		}
+
+		arrIn[5] = function(){
+			console.log("5in");
+		}
+
+		arrOut[5] = function(){
+			console.log("5out");
+		}
+
+
+
+	</script>
+</body>
+</html>

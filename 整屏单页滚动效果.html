@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>weixinT</title>
+	<style type="text/css">
+		header{
+			position: fixed;
+			z-index: 999;
+			top:0;
+			left:500px;
+
+		}
+
+		header ul{
+			list-style: none;
+		}
+
+		header ul li{
+			padding:15px 20px;
+			background:skyblue;
+			float:left;
+			cursor:pointer;
+		}
+
+		header ul li.cur{
+			background:yellowgreen;
+		}
+		body{
+			width:100%;
+			height: 100%;
+			overflow: hidden;
+			
+		}
+		.wrapper{
+			width: 100%;
+			height: 100%;
+			position:absolute;
+			left:0;
+			top:0;
+		}
+		.page{
+			width: 100%;
+			height: 100%;
+			position:absolute;
+			left:0;
+		}
+		.page1{
+			top:0;
+			background:url(img/wxt/b1_bg.jpg) no-repeat;
+		}
+		.page2{
+			top:100%;
+			background:url(img/wxt/b2_bg.jpg) no-repeat;
+		}
+		.page3{
+			top:200%;
+			background:url(img/wxt/b3_bg.jpg) no-repeat;
+		}
+		.page4{
+			top:300%;
+			background:url(img/wxt/b4_bg.jpg) no-repeat;
+		}
+		.page5{
+			top:400%;
+			background:url(img/wxt/b5_bg.jpg) no-repeat;
+		}
+		.page6{
+			top:500%;
+			background:url(img/wxt/b6_bg.jpg) no-repeat;
+		}
+		.page7{
+			top:600%;
+			background:url(img/wxt/b7_bg.jpg) no-repeat;
+		}
+
+		.innerWrapper{
+			width:1000px;
+			height:100%;
+			margin:0 auto;
+			position:relative;
+			
+		}
+		.innerWrapper img{
+			display: none;
+			position: absolute;
+		}
+
+		.innerWrapper .b1_02{
+			top:15%;
+			left:-100px;
+		}
+
+		.innerWrapper .b1_03{
+			right:100px;
+			top:30%;
+		}
+
+		.innerWrapper .b1_01{
+			bottom:-100px;
+			left:50%;
+			margin-left:-720px;
+		}
+
+		.innerWrapper .b1_04{
+			right:0;
+			top:33%;
+		}
+
+		.page2 img{
+			position: absolute;
+		}
+
+		.page2 .b2_01{
+			left:-350px;
+			bottom:-0px;
+		
+		}
+	
+
+	</style>
+</head>
+<body>
+	<header>
+		<ul>
+			<li class="cur" data-go="0">首页</li>
+			<li data-go="2">营销手段</li>
+			<li data-go="5">服务优势</li>
+			<li data-go="6">特色功能</li>
+			<li data-go="4">技术特点</li>
+			<li data-go="3">申请加入</li>
+			<li data-go="1">加盟代理</li>
+		</ul>
+	</header>
+	
+	<div class="wrapper">
+		<div class="page1 page">
+			<div class="innerWrapper">
+				
+			</div>
+		</div>
+
+		<div class="page2 page">
+			<div class="innerWrapper">
+				<img class="b2_01" src="img/wxt/b2_01.png">
+			</div>
+
+		</div>
+		<div class="page3 page"></div>
+		<div class="page4 page"></div>
+		<div class="page5 page"></div>
+		<div class="page6 page"></div>
+		<div class="page7 page"></div>
+	</div>
+
+
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easie.js"></script>
+
+	<script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+	<script type="text/javascript">
+
+   		
+ 	var lock;
+	picLoaded(); //第一屏图片加载完
+
+	function picLoaded(){
+		var count = 0, 
+		imgArr = [{"src":"img/wxt/b1_02.png","className":"b1_02"},
+				  {"src":"img/wxt/b1_03.png","className":"b1_03"},
+				  {"src":"img/wxt/b1_01.png","className":"b1_01"},
+				  {"src":"img/wxt/b1_04.png","className":"b1_04"}
+				 ],
+
+		imgTotal = imgArr.length;
+
+		for(i = 0;i < imgTotal;i++){
+			var image = new Image();
+			image.src = imgArr[i].src;
+			image.className = imgArr[i].className;
+
+			image.onload = function(){	
+				$(".page1 .innerWrapper").append(this);
+				count++;
+				if(count == imgTotal){
+					already = true;
+					inArr[0]();  //调用第一屏入场 
+				}else{
+					already = false;
+				}
+			}
+		}
+	}
+
+
+
+	var pageIdx = 0;
+	var $wrapper = $(".wrapper");
+	var inArr = [];
+	var outArr = [];
+
+	inArr[0] = function(){
+		lock = true;
+		$(".page1 .b1_02").show()
+			.css({
+				"margin-left":"-200px",
+				"opacity":0,
+			})
+			.animate({
+				"margin-left":"-100px",
+				"opacity":1
+			},1000);
+
+		$(".page1 .b1_03").show()
+			.css({
+				"margin-right":"-100px",
+				"opacity":0,
+			})
+			.animate({
+				"margin-right":"-0px",
+				"opacity":1
+			},1000);
+
+		$(".page1 .b1_01").delay(500).fadeIn(1000);
+
+		$(".page1 .b1_04").delay(500).fadeIn(1000,function(){
+			lock = false;
+		});
+		
+	}
+
+	outArr[0] = function(){
+		$(".page1 img").fadeOut(500);
+	}
+	inArr[1] = function(){
+		$(".page2 .b2_01").show()
+		.css({
+			"margin-left":"-300px",
+			"margin-bottom":"-300px"
+
+		})
+		.animate({
+			"margin-left":0,
+			"margin-bottom":0,
+		},1000,function(){
+			lock = false;
+		});
+	}
+
+	outArr[1] = function(){
+		$(".page2 .b2_01")
+		.animate({
+			"margin-left":"-300px",
+			"margin-bottom":"-600px"
+		},500);
+	}
+
+
+	inArr[2] = function(){ }
+
+	outArr[2] = function(){}
+
+	inArr[3] = function(){}
+
+	outArr[3] = function(){}
+
+	inArr[4] = function(){}
+
+	outArr[4] = function(){}
+
+	inArr[5] = function(){}
+
+	outArr[5] = function(){}
+
+	inArr[6] = function(){}
+
+	outArr[6] = function(){}
+
+	
+
+	$(document).mousewheel(function(event,delta){
+		if(lock) return;
+		var oldIdx = pageIdx; 
+		
+		pageIdx -= delta;
+		if(pageIdx < 0 ){
+			pageIdx = 0;
+		}else if(pageIdx > 6){
+			pageIdx = 0;
+		}
+
+
+		if(oldIdx != pageIdx){
+			$wrapper.animate({"top":pageIdx * -100 + "%"},500,"easieEaseInQuart");	
+			outArr[oldIdx]();
+			inArr[pageIdx]();
+			lock = true;
+				setTimeout(function(){
+				lock = false;
+			},500);
+			navChangBg();
+			
+
+		}
+	});
+
+	function navChangBg(){
+		$("header li").removeClass("cur");
+		$("header li").eq(pageIdx).addClass("cur");
+	}
+
+
+	$("header li").click(function(){
+		if(lock) return;
+		var navIdx = parseInt($(this).attr("data-go"));
+		var oldIdx = pageIdx; 
+		pageIdx = navIdx;
+		if(oldIdx != pageIdx){
+			console.log(pageIdx);
+			$wrapper.animate({"top":pageIdx * -100 + "%"},500,"easieEaseInQuart");	
+			
+			outArr[oldIdx]();
+			inArr[pageIdx]();
+			lock = true;
+			setTimeout(function(){
+				lock = false;
+			},500);
+
+			$("header li").removeClass("cur");
+			$(this).addClass("cur");
+			
+		}
+
+	});
+
+
+
+
+	</script>
+</body>
+</html>

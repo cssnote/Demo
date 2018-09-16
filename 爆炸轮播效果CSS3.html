@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>baozha</title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+
+		body{
+			overflow: hidden;
+		}
+
+		.lunbo{
+			width: 560px;
+			height: 300px;
+			margin: 150px auto;
+			position: relative;
+			perspective: 800px;
+			transform-style: preserve-3d;
+		}
+
+		ul{
+			list-style: none;
+			width: 560px;
+			height: 300px;
+
+		}
+
+		li{
+			position: absolute;
+			left:0;
+			top:0;
+			display: none;
+		}
+		
+		li.hide{
+			display: none;
+		}
+
+		li.display{
+			display: block;
+		}
+
+		.btn div{
+			width: 70px;
+			height: 70px;
+			border-radius: 10px;
+			background-color:rgb(100,100,100,.5);
+			position: absolute;
+			font-size:48px;
+			text-align: center;
+			top:115px;
+			cursor: pointer;
+			z-index: 20;
+			color:rgb(200,200,200);
+			border:1px solid rgb(130,130,130);
+			transition: background-color .3s;
+		}
+
+		.btn div:hover{
+			background-color:rgb(50,50,50,.5);
+
+		}
+
+		.prev{
+			left:10px;
+			
+		}
+
+		.next{
+			right:10px;
+		}
+		.fragment div{
+			position: absolute;
+			width: 80px;
+			height: 50px;
+			z-index: 1;
+		}
+
+		.action div{
+			transition:all 1s;
+		}
+		
+		.lunbo:hover .fragment div{
+			
+		}
+
+	</style>
+</head>
+<body>
+	<div class="lunbo">
+		<ul>
+			<li><a href="#"><img src="img/maogou/0.jpg" alt=""></a></li>
+			<li><a href="#"><img src="img/maogou/1.jpg" alt=""></a></li>
+			<li><a href="#"><img src="img/maogou/2.jpg" alt=""></a></li>
+			<li><a href="#"><img src="img/maogou/3.jpg" alt=""></a></li>
+			<li><a href="#"><img src="img/maogou/4.jpg" alt=""></a></li>
+		</ul>
+		<div class="btn">
+			<div class="prev"><</div>
+			<div class="next">></div>
+		</div>
+		<div class="fragment">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript">
+		var idx = 0; 
+		var lock;
+		$("li").eq(idx).addClass("display");
+
+		$(".fragment div").each(function(i){
+			$(this).css({
+				"left":i%7*80,
+				"top" :parseInt(i/7) * 50,
+				"background-position":-i%7*80 +"px "+ -parseInt(i/7) * 50+'px'
+			});
+		});
+
+		function changePosition(idx){
+			var imgURL = $(".lunbo img").eq(idx).attr("src");
+			var imgURL2 = $(".lunbo img").eq(idx+1).attr("src");
+
+			$(".fragment").addClass("action");
+			$(".fragment div").each(function(i){
+				$(this).css({
+					"background-image":"url("+imgURL+")",
+					"transform":"rotateY("+(Math.random()*360-180)+"deg) rotateX("+(Math.random()*360-180)+"deg) translateZ(1000px)",
+					"opacity":0
+				});
+			});
+
+
+			setTimeout(function(){
+				$(".fragment").removeClass("action");
+				$(".fragment div").css(
+				{
+					"transform":"none",
+					"opacity":"1",
+					"background-image":"none"
+				});
+
+				lock = false;
+			},1000);
+
+		}
+
+		
+		$(".next").click(function(){
+			if(lock) return;
+			lock = true;
+			$("li").eq(idx).attr("class","hide");
+
+			changePosition(idx);
+
+			idx++;
+			if(idx > 4){
+				idx = 0;
+			}
+			$("li").eq(idx).attr("class","display");
+			
+		});
+
+
+		$(".prev").click(function(){
+			if(lock) return;
+			lock = true;
+			$("li").eq(idx).attr("class","hide");
+			changePosition(idx);
+			idx--;
+			if(idx < 0){
+				idx = 4;
+			}
+			$("li").eq(idx).attr("class","display");
+		});
+
+
+
+	</script>
+</body>
+</html>

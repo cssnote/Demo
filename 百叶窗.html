@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+		.byc{
+			width:800px;
+			height: 300px;
+			border: 1px solid gray;
+			position: relative;
+			overflow: hidden;
+		}
+		.byc ul {
+			list-style: none;
+		}
+		.byc li{
+			width:560px;
+			position:absolute;
+			top:0;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="byc">
+		<ul>
+			<li><a href="#"><img src="img/maogou/0.jpg" alt=""></a></li>
+			<li><a href="#"><img src="img/maogou/1.jpg" alt=""></a></li>
+			<li><a href="#"><img src="img/maogou/2.jpg" alt=""></a></li>
+			<li><a href="#"><img src="img/maogou/3.jpg" alt=""></a></li>
+			<li><a href="#"><img src="img/maogou/4.jpg" alt=""></a></li>
+	
+		</ul>
+	</div>
+	
+	<script src="https://cdn.bootcss.com/jquery/1.8.1/jquery.js"></script>
+	<script type="text/javascript">
+		var bycWidth = parseInt($(".byc").css("width"));
+		var lis = $(".byc li");
+		var jiange = bycWidth/$(".byc li").size();
+		var jiange2 = (bycWidth-560)/(lis.size()-1);
+		
+		
+
+	
+		$(".byc li").each(function(i){
+			$(this).css("left",i*jiange);
+		
+		});
+
+		$(".byc li").mouseenter(function(){
+			var thisIdx=$(this).index();
+			
+			lis.each(function(i){
+				if(i<=thisIdx){
+					lis.eq(i).stop().animate({"left":i*jiange2},500);
+				}else if(i>thisIdx){
+					lis.eq(i).stop().animate({"left":i*(jiange2-1)+560},500);
+				}
+			});
+		});
+
+
+		
+
+		$(lis).mouseleave(function(){
+			lis.each(function(i){
+				lis.eq(i).stop().animate({"left":i*jiange},500);
+			});
+		});
+	</script>
+</body>
+</html>

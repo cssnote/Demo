@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>携程手机网</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		
+		body{
+			font-size: 14px;
+		}
+		.wrapper{
+			max-width: 540px;
+			min-width: 320px;
+			margin:0 auto;
+			background:#f2f2f2;
+
+		}
+		.search-box{
+			max-width: 540px;
+			min-width: 320px;
+			position:fixed;
+			z-index: 999;
+			top:0;
+			font-size:0.8em;
+			color:#666;
+			left:50%;
+			height: 45px;
+			width:100%;
+			transform:translateX(-50%);
+			background-color: #f6f6f6;
+			border-bottom:1px solid #ccc;
+			padding:8px 59px 10px 8px;
+			box-sizing:border-box;
+
+		}
+
+		.search{
+			border:1px solid #999;
+			border-radius:5px;
+			width: 100%;
+			height:26px;
+			box-shadow: 0 2px 4px rgba(0,0,0,.2);
+			line-height: 26px;
+			background-color: #fff;
+		}
+
+		.search span{
+			position: relative;
+			padding-left:20px;
+		}
+		.search span::before{
+			position: absolute;
+			left:4px;
+			top:-2px;
+			width:14px;
+			height:17px;
+			background:url(img/xiecheng/icons.png) -60px -276px no-repeat;
+			content: "";
+			background-size:104px 327px;
+
+		}
+		
+
+		
+		.personal{
+			width: 48px;
+			height:44px;
+			
+			position: absolute;
+			top:0;
+			right:0;
+		}
+
+		.personal::before{
+			content: "";
+			position:absolute;
+			top:2px;
+			left:2px;
+			width:24px;
+			height:25px;
+			background:url(img/xiecheng/icons.png) -58px -193px no-repeat;
+			background-size:104px 327px;
+			
+		}
+
+		.personal span{
+			position: absolute;
+			left:3px;
+			bottom:2px;
+
+		}
+		
+		.slider{
+			width: 100%;
+			margin-top:45px;
+			overflow: hidden;
+		}
+		
+		.slider ul{
+			list-style: none;
+			width:3400px;
+			height:100%;
+			overflow: hidden;
+			transition-property:transform;
+		}
+		
+	
+
+
+		.slider li{
+			float:left;
+			max-width: 540px;
+		}
+
+		.slider li a{
+			display: block;
+			font-size: 0;
+
+		}
+		.slider img{
+			width: 100%;
+		}
+
+		nav{
+			padding:5px 5px 5px 5px;
+			width: 100%;
+    		box-sizing: border-box;
+		}
+		nav .row{
+			width: 100%;
+			height:89px;
+			box-sizing: border-box;
+    		margin-bottom:4px;
+    		
+		}
+
+		nav .row:first-child{
+			background:linear-gradient(to right,#fa5956,#fa9b4d);
+			border-radius:8px 8px 0 0;
+		}
+
+		nav .row:nth-child(2){
+			background-image:linear-gradient(to right,#4b8fed,#53bced);
+			
+		}
+
+		nav .row:last-child{
+			background-image:linear-gradient(to right,#34c2aa,#6cd557);
+			border-radius:0 0 8px 8px;
+			margin-bottom:0;
+		}
+
+		
+		nav .row a{
+			height:45px;
+			float:left;
+			width: 33.33%;
+			text-decoration: none;
+			line-height: 45px;
+			text-align:center;
+			box-sizing: border-box;
+			border-left:1px solid #f2f2f2;
+			border-bottom:1px solid #f2f2f2;
+			text-shadow: 0 1px 1px rgba(0,0,0,.25);
+			
+		}
+
+		nav .row a:link,nav .row a:visited{
+			color:#FFF;
+		}
+
+		nav .row a:nth-child(1){
+			height:90px;
+			border-left:none;
+			background-size: 123px;
+			background-position:center bottom;
+			background-repeat: no-repeat;
+		}
+
+		nav .row:first-child a:nth-child(1){
+			background-image:url(img/xiecheng/hotel.png);
+		}
+
+		nav .row:nth-child(2) a:nth-child(1){
+			background-image:url(img/xiecheng/flight.png);
+		}
+
+		nav .row:last-child a:nth-child(1){
+			background-image:url(img/xiecheng/travel.png);
+		}
+
+		
+		.lastSection p{
+			height:auto;
+			flex:0 1 50%;
+			padding-left:1px;
+			box-sizing: border-box;
+		}
+
+
+		.lastSection .lastRow{
+			display: flex;
+		}
+
+		
+
+		.lastSection p img{
+			width: 100%;
+			min-height: 130px;
+			display: block;
+		}
+
+		.subnav{
+			background-color: #FFF;
+			border-radius: 8px;
+			display: flex;
+			flex-wrap: wrap;
+			margin:0 5px 8px;
+			list-style: none;
+		}
+
+		.subnav li{
+			flex:0 0 20%;
+			padding: 5px 2px;
+			box-sizing: border-box;
+		}
+
+		.subnav li a{
+			display: flex;
+			align-items: center;
+			color:#444;
+			text-decoration:none;
+			flex-direction: column;
+		}
+
+		.subnav li [class^=subnav-icon]{
+			width: 28px;
+			height:28px;
+			background:url(img/xiecheng/subnav-icons.png) no-repeat;
+			background-size: 24px auto;
+
+		}
+
+		.subnav li:nth-child(1) span.subnav-icon{
+			background-position: 3px 5px;
+		}
+		.subnav li:nth-child(2) span.subnav-icon{
+			background-position: 5px -22px;
+		}
+		.subnav li:nth-child(3) span.subnav-icon{
+			background-position: 5px -51px;
+		}
+		.subnav li:nth-child(4) span.subnav-icon{
+			background-position: 3px -81px;
+		}
+
+		.subnav li:nth-child(5) span.subnav-icon{
+			background-position: 5px -22px;
+		}
+		.subnav li:nth-child(6) span.subnav-icon{
+			background-position: 5px -22px;
+		}
+		.subnav li:nth-child(7) span.subnav-icon{
+			background-position: 5px -22px;
+		}
+		.subnav li:nth-child(8) span.subnav-icon{
+			background-position: 5px -22px;
+		}
+		.subnav li:nth-child(9) span.subnav-icon{
+			background-position: 5px -22px;
+		}
+		.subnav li:nth-child(10) span.subnav-icon{
+			background-position: 5px -22px;
+		}
+
+		
+
+
+
+
+	</style>
+</head>
+<body>
+	<div class="wrapper" id="wrapper">
+		<div class="search-box">
+			<div class="search">
+				<span>搜索:目的地/酒店/景点/航班号</span>
+			</div>
+			<a class="personal"><span>我的</span></a>
+		</div>
+
+		<div class="slider">
+			<ul>
+				<li><a href="#"><img src="img/xiecheng/4.jpg" alt=""></a></li>
+				<li><a href="#"><img src="img/xiecheng/1.jpg" alt=""></a></li>
+				<li><a href="#"><img src="img/xiecheng/2.jpg" alt=""></a></li>
+				<li><a href="#"><img src="img/xiecheng/3.jpg" alt=""></a></li>
+				<li><a href="#"><img src="img/xiecheng/4.jpg" alt=""></a></li>
+				<li><a href="#"><img src="img/xiecheng/1.jpg" alt=""></a></li>
+			</ul>
+		</div>
+
+		<nav>
+			<div class="row">
+				<a href="#">酒店</a>
+				<a href="#">海外酒店</a>
+				<a href="#">团购</a>
+				<a href="#">特价酒店</a>
+				<a href="#">民宿客栈</a>
+			</div>
+			<div class="row">
+				<a href="#">酒店</a>
+				<a href="#">海外酒店</a>
+				<a href="#">团购</a>
+				<a href="#">特价酒店</a>
+				<a href="#">民宿客栈</a>
+			</div>
+			<div class="row">
+				<a href="#">酒店</a>
+				<a href="#">海外酒店</a>
+				<a href="#">团购</a>
+				<a href="#">特价酒店</a>
+				<a href="#">民宿客栈</a>
+			</div>
+			
+		</nav>
+
+
+
+		<ul class="subnav">
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>wifi电话卡</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>外币兑换</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>购物</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>当地向导</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>自由行</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>境外玩乐</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>礼品卡</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>信用卡</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>购物</span>
+				</a>
+			</li>
+
+			<li>
+				<a href="#">
+					<span class="subnav-icon"></span>
+					<span>更多</span>
+				</a>
+			</li>
+		</ul>
+
+		
+
+		<div class="lastSection">
+			<div class="lastRow">
+				<p><img src="img/xiecheng/last1.jpg"></p>
+				<p><img src="img/xiecheng/last2.jpg"></p>
+			</div>
+			<div class="lastRow">
+				<p><img src="img/xiecheng/last1.jpg"></p>
+				<p><img src="img/xiecheng/last2.jpg"></p>
+			</div>
+			
+		</div>
+
+		
+	
+	</div>
+
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript">
+
+		var wrapperWidth;
+		var idx = 1;
+
+
+		setWidth();
+
+
+		
+		//定时器自动轮播
+
+		setIv();
+
+		function setIv(){
+			timer = setInterval(function(){
+				idx++ ;
+				move();
+			},3000);
+		}
+		
+
+
+
+		window.onresize = setWidth;
+
+		function setWidth(){
+			var wrapper = document.getElementById('wrapper');
+			wrapperWidth = document.defaultView.getComputedStyle(wrapper,null);
+			$(".slider li").css("width",wrapperWidth.width);
+			$(".slider ul").css({
+				
+				"transform":"translateX(-"+parseInt(wrapperWidth.width) *idx +"px)",
+				"transition-duration":"0s",
+		
+			});
+
+		}
+
+		
+		
+
+
+		$(".slider li").bind('touchstart',function(event){
+			clearInterval(timer);
+			firstX = event.originalEvent.touches[0].clientX;
+			firstY = event.originalEvent.touches[0].clientY;
+		});
+
+		$(".slider li").bind("touchmove",function(event){
+
+			targetX = event.originalEvent.touches[0].clientX -firstX;
+			targetY = event.originalEvent.touches[0].clientY -firstY;
+			
+			$(".slider ul").css({
+				"transform":"translateX("+(targetX  - parseInt(wrapperWidth.width) * idx)+"px)",
+				"transition-duration":"0s",
+			});
+
+		});
+
+		$(".slider li").bind("touchend",function(event){
+			if(targetX > 50){
+				idx--;
+				move();
+				setIv();
+			}else if(targetX > 0 && targetX < 50){
+				move();
+				setIv();
+			}else if(targetX < -50){
+				idx++;
+				move();
+				setIv();
+			}else if(targetX > -50 && targetX < 0){
+				move();
+				setIv();
+			}
+		});
+
+
+		// 移动函数
+		function move(){
+
+			$(".slider ul").css({
+				"transform":"translateX("+ -parseInt(wrapperWidth.width) * idx +"px)",
+				"transition-duration":".5s",
+			});
+
+			if(idx > 4){
+				idx = 1;
+				setTimeout(function(){
+					$(".slider ul").css({
+						"transform":"translateX("+ -parseInt(wrapperWidth.width) * idx+"px)",
+						"transition-duration":"0s",
+					
+					});
+				},500);
+			}else if(idx < 1){
+				idx = 4;
+				setTimeout(function(){
+					$(".slider ul").css({
+						"transform":"translateX("+ -parseInt(wrapperWidth.width) * idx+"px)",
+						"transition-duration":"0s",
+					
+					});
+				},500);
+			}
+
+
+
+
+
+			
+		}
+
+
+
+
+		
+		
+	</script>
+</body>
+</html>

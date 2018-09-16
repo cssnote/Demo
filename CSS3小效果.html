@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		body{
+			overflow: hidden;
+		}
+		div{
+			
+			background-image:url(img/shouxin.png);
+		}
+		.leaf{
+			width: 152px;
+			height: 64px;
+			position: relative;
+			left:200px;
+			background-position: 0px -151px;
+			animation:leaf 4s linear forwards;
+		}
+
+		.shapeWrapper{
+			position: relative;
+			background: none;
+			left:600px;
+			top:300px;
+		}
+		.shapeWrapper div{
+			animation-name:shape;
+			animation-iteration-count: infinite;
+			animation-duration:2s;
+		}
+
+		.shape1{
+			animation-delay: 1s;
+		}
+		
+
+		.shape1{
+			width: 96px;
+			height: 95px;
+			position: absolute;
+			left:5px;
+			top:0px;
+			z-index: 2;
+			background-position:0 -215px;
+		}
+		.shape2{
+			width: 170px;
+			height: 170px;
+			left:0;
+			top:0;
+			z-index: 1;
+			background-position: 0 -312px;
+		}
+
+		.light{
+			position: absolute;
+			left:300px;
+			top:300px;
+			width: 193px;
+			height: 256px;
+			background-position: 0 -621px;
+		}
+
+		.rocket{
+			position: absolute;
+			right:550px;
+			top:300px;
+			width: 250px;
+			height: 220px;
+			background-position:-238px 0;
+			animation:rocket .2s alternate infinite linear;
+		}
+
+		.elem1{
+			width: 157px;
+			height: 150px;
+			position: absolute;
+			left:875px;
+			top:410px;
+			background-position:-240px -222px;
+			animation:e2 .3s infinite linear;
+		}
+		.elem2{
+			width: 79px;
+			height: 73px;
+			position: absolute;
+			left: 945px;
+			top: 490px;
+			background-position: -159px -150px;
+			animation:e2 .5s infinite linear;
+		}
+
+		@keyframes e2{
+			0%{transform: translateX(300px) translateY(-300px);opactiy:0;}
+			50%{transform: translateX(0) translateY(0);opacity:1}
+			100%{transform: translateX(-300px) translateY(300px);opacity:0}
+		}
+
+		.elem3{
+			width: 157px;
+			height: 157px;
+			position: absolute;
+			left: 1075px;
+			top: 550px;
+			background-position: -240px -371px;
+			animation:e2 .7s infinite linear;
+		}
+
+		.elem4{
+			width: 93px;
+			height: 90px;
+			position: absolute;
+			left: 1095px;
+    		top: 650px;
+			background-position: -395px -222px;
+			animation:e2 .8s infinite linear;
+		}
+
+
+
+		@keyframes rocket{
+			from{transform: translateX(-5px) translateY(-7px);}
+			to{transform: translateX(5px) translateY(7px);}
+		}
+
+		.light-flash{
+			width: 344px;
+			height: 256px;
+			position: absolute;
+			left:223px;
+			top:225px;
+			background-position: 0 -887px;
+			animation:flash 2s infinite ;
+		}
+
+
+
+		@keyframes leaf{
+			0%{transform:rotateZ(-10deg);opacity:.8}
+			35%{transform: translateX(50px) translateY(120px) rotateZ(0deg);opacity: 1}
+			65%{transform: translateX(100px) translateY(240px) rotateZ(5deg);opacity: 1}
+			100%{transform: translateX(100px) translateY(400px) rotateZ(15deg);opacity: 0}
+		}
+
+		
+
+		@keyframes shape{
+			60%{transform:rotateZ(360deg);}
+			100%{transform:rotateZ(360deg);}
+		}
+
+
+		@keyframes flash{
+			50%{opacity:100}
+			100%{opacity:0}
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="rocket"></div>
+	<div class="elem1"></div>
+	<div class="elem2"></div>
+	<div class="elem3"></div>
+	<div class="elem4"></div>
+	
+	<div class="leaf"></div>
+
+	<div class="shapeWrapper">
+		<div class="shape1">
+			
+		</div>
+		<div class="shape2">
+			
+		</div>
+	</div>
+
+	<div class="light">
+		
+	</div>
+	<div class="light-flash"></div>
+</body>
+</html>

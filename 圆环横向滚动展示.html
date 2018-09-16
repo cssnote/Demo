@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>html5/css3</title>
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		/* article{
+			position: relative;
+			width:700px;
+			height:700px;
+			border:1px solid green;
+		
+		}
+		div{
+			width: 100px;
+			height: 100px;
+			position:absolute;
+			left:300px;
+			top:300px;
+			border-radius: 150px;
+			background-color: skyblue;
+		} */
+
+		article{
+			width: 1000px;
+			height: 800px;
+			transform-style: preserve-3d;
+			perspective: 900px;
+			margin:0 auto;	
+		}
+
+		ul{
+			list-style: none;
+			position: relative;
+			width: 100%;
+			transition:transform 1s;
+			height: 100%;
+			transform-style: preserve-3d;
+			
+		}
+		li{
+			width: 200px;
+			height: 130px;
+			position: absolute;
+			left:50%;
+			top:50%;
+			margin:-65px 0 0 -100px;
+			
+		}
+
+	
+	</style>
+</head>
+<body ondragstart="return false">
+	
+    <article>
+		<ul>
+			<li><img src="img/number/0.png" alt=""></li>
+			<li><img src="img/number/1.png" alt=""></li>
+			<li><img src="img/number/2.png" alt=""></li>
+			<li><img src="img/number/3.png" alt=""></li>
+			<li><img src="img/number/4.png" alt=""></li>
+			<li><img src="img/number/5.png" alt=""></li>
+			<li><img src="img/number/6.png" alt=""></li>
+			<li><img src="img/number/7.png" alt=""></li>
+			<li><img src="img/number/8.png" alt=""></li>
+			<li><img src="img/number/9.png" alt=""></li>
+			<li><img src="img/number/10.png" alt=""></li>
+			
+		</ul>
+	</article>		
+	
+	
+	<script type="text/javascript" src="js/jquery-1.12.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mousewheel.min.js"></script>
+	<script type="text/javascript">
+
+	var angleEach = 360 / 11;
+	console.log(angleEach);
+	var degx = 0; //新值
+	var degy = 0;
+	var degy2 = 0; //总值
+	var degx2 = 0;
+	$("li").each(function(i){
+		$(this).css("transform","rotateY("+ i * angleEach +"deg) translateZ(400px)");
+	});	
+
+	$(document).mousedown(function(event){
+		var startX = event.clientX
+		var startY = event.clientY;
+		$("ul").css("transition",'none');
+		$(document).mousemove(function(e){
+			var goldX = e.clientX - startX;
+			var goldY = e.clientY - startY;
+			degy = goldX / 10;
+			degx = -goldY / 10;
+			rotate3d(degx+degx2,degy+degy2);
+		});
+	});
+
+	$(document).mouseup(function(){
+		$(document).off("mousemove");
+		degy2 += degy;
+		degx2 += degx;
+		console.log(degy2%angleEach);
+	});
+
+	function rotate3d(x,y){
+		$("ul").css("transform","rotateX("+x+"deg) rotateY("+y+"deg)");
+	}
+
+	$("article").mousewheel(function(event,delta){
+		var yushu = degy2%angleEach;
+	
+		$("ul").css("transition",'transform 1s');
+		event.preventDefault();
+		degy2 -= delta * angleEach;
+		rotate3d(degx2,degy2);
+		
+	});
+
+
+	function circleMove(){
+		var a = 350;
+		var b = 350;
+		var r = 350;
+		var angle = 0;
+
+		var timePer = 1000;
+		var interval = 20;  //每20毫秒运动一次
+		var cishu  = timePer / interval;
+		var anglePer = 360 / cishu;
+
+		
+
+		setInterval(function(){
+			angle += anglePer;
+			var rad = angle * Math.PI / 180; 
+			var x = a + r*Math.sin(rad);
+			var y = b - r*Math.cos(rad);
+			
+			$("div").css({
+				"left":x-50+'px',
+				"top":y-50+'px'
+			})
+		},interval);
+	}
+
+	</script>
+</body>
+</html>
