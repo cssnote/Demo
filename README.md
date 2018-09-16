@@ -1,4 +1,4 @@
-在线预览：
+在线预览：(Github网速有点慢请耐心等待加载)
 
 [3D轮播-滚动条版本CSS3](https://cssnote.github.io/Demo/3D轮播-滚动条版本CSS3.html)    
 [Bootstrap响应式](https://cssnote.github.io/Demo/Bootstrap响应式.html)    
